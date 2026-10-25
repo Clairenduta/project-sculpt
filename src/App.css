@@ -106,29 +106,36 @@ input[type="date"] { color-scheme: dark; }
 
 .rings-wrap { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 17px; }
 .activity-rings { width: 182px; height: 182px; display: grid; place-items: center; }
-.ring { display: grid; place-items: center; border-radius: 50%; transform: rotate(-90deg); }
+.ring {
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  transform: rotate(-90deg);
+  position: relative;
+  flex-shrink: 0;
+}
 .ring-outer {
-  width: 180px; height: 180px;
+  width: 180px;
+  height: 180px;
   background: conic-gradient(var(--lime) var(--ring-progress), #303226 0);
   -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 9px), #000 calc(100% - 8px));
   mask: radial-gradient(farthest-side, transparent calc(100% - 9px), #000 calc(100% - 8px));
 }
+
 .ring-middle {
-  width: 143px; height: 143px;
+  width: 143px;
+  height: 143px;
   background: conic-gradient(#f4f4e8 var(--ring-progress), #353535 0);
   -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 9px), #000 calc(100% - 8px));
   mask: radial-gradient(farthest-side, transparent calc(100% - 9px), #000 calc(100% - 8px));
 }
+
 .ring-inner {
-  width: 106px; height: 106px;
+  width: 106px;
+  height: 106px;
   background: conic-gradient(#8a8a82 var(--ring-progress), #303030 0);
   -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 9px), #000 calc(100% - 8px));
   mask: radial-gradient(farthest-side, transparent calc(100% - 9px), #000 calc(100% - 8px));
-}
-.ring-center {
-  position: absolute; transform: rotate(90deg); width: 90px; height: 90px;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  -webkit-mask: none; mask: none;
 }
 .ring-center span { font-size: 8px; letter-spacing: 1.5px; color: var(--muted); }
 .ring-center strong { font-family: 'Barlow Condensed', sans-serif; font-size: 28px; color: var(--white); }
@@ -377,4 +384,74 @@ input[type="date"] { color-scheme: dark; }
   .progress-stat strong { font-size: 27px; }
   .exercise-picker { gap: 6px; }
   .set-header, .set-row { grid-template-columns: 23px minmax(35px, 1fr) minmax(34px, .8fr) 27px 13px; gap: 4px; }
+}
+
+
+
+
+/* SCULPT ACTIVITY RINGS FIX */
+.activity-rings {
+  position: relative !important;
+  width: 182px;
+  height: 182px;
+  display: grid;
+  place-items: center;
+  isolation: isolate;
+}
+
+.activity-rings > .ring {
+  position: absolute !important;
+  inset: auto !important;
+  margin: 0 !important;
+  display: block;
+  border-radius: 50%;
+  flex-shrink: 0;
+  transform: rotate(-90deg);
+}
+
+.activity-rings > .ring-outer {
+  width: 180px;
+  height: 180px;
+  z-index: 1;
+}
+
+.activity-rings > .ring-middle {
+  width: 143px;
+  height: 143px;
+  z-index: 2;
+}
+
+.activity-rings > .ring-inner {
+  width: 106px;
+  height: 106px;
+  z-index: 3;
+}
+
+.activity-rings > .ring-center {
+  position: absolute !important;
+  inset: 0 !important;
+  margin: auto !important;
+  width: 90px;
+  height: 90px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transform: none !important;
+  z-index: 4;
+  -webkit-mask: none !important;
+  mask: none !important;
+  pointer-events: none;
+}
+
+.activity-rings > .ring-center span {
+  font-size: 8px;
+  letter-spacing: 1.5px;
+  color: var(--muted);
+}
+
+.activity-rings > .ring-center strong {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 28px;
+  color: var(--white);
 }
